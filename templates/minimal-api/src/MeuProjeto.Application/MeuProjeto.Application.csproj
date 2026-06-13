@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Divino.OperationResult" />
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Riok.Mapperly" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MeuProjeto.Domain\MeuProjeto.Domain.csproj" />
+    <ProjectReference Include="..\MeuProjeto.SharedKernel\MeuProjeto.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>
