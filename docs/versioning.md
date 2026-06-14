@@ -1,77 +1,149 @@
-# Versionamento
+# 📦 Política de Versionamento
 
-Este repositório segue o padrão de **Versionamento Semântico (SemVer)**.
+O ArchForge segue o padrão de **Versionamento Semântico (Semantic Versioning — SemVer)** para garantir previsibilidade na evolução da CLI e dos templates gerados.
 
-Formato:
+Formato adotado:
 
+```text
 MAJOR.MINOR.PATCH
+```
 
 Exemplo:
+
+```text
 1.2.0
+```
 
-## Regras de Versionamento
+# 🎯 O que significa cada número?
 
-### MAJOR
+## 🔴 MAJOR
 
-Incrementado quando houver:
+Incrementado quando houver mudanças incompatíveis com versões anteriores (_breaking changes_).
 
-- Mudança estrutural na arquitetura base dos templates
-- Alteração nas regras de dependência entre camadas
-- Atualização de versão LTS do .NET que cause breaking changes
-- Mudanças que exijam adaptação manual nos projetos gerados
+Essas alterações normalmente impactam a estrutura dos projetos gerados ou exigem adaptações manuais por parte dos usuários.
 
-Exemplo:
+### Exemplos
+
+- Alteração da arquitetura base dos templates
+- Mudança na estrutura de diretórios
+- Alteração das dependências entre camadas
+- Atualização de versão do .NET que introduza incompatibilidades
+- Substituição de bibliotecas centrais da solução
+
+### Cenários práticos
+
+```text
+1.x.x → 2.0.0
+```
+
+- Migração de Controllers para Minimal APIs
+- Substituição do padrão CQRS utilizado
+- Reestruturação completa da solução
+
+## 🟡 MINOR
+
+Incrementado quando novos recursos são adicionados de forma compatível com versões anteriores.
+
+O objetivo é expandir as capacidades da ferramenta sem quebrar o comportamento já existente.
+
+### Exemplos
+
+- Novos templates
+- Novos comandos da CLI
+- Integrações opcionais
+- Recursos arquiteturais adicionais
+
+### Cenários práticos
+
+```text
+1.2.x → 1.3.0
+```
+
+- Inclusão de template Worker Service
+- Integração opcional com Redis
+- Inclusão de OpenTelemetry
+- Health Checks configurados automaticamente
+
+## 🟢 PATCH
+
+Incrementado para correções e melhorias que não alteram o comportamento esperado dos templates ou da CLI.
+
+### Exemplos
+
+- Correção de bugs
+- Ajustes de configuração
+- Atualização de dependências
+- Melhorias na documentação
+- Correções em templates existentes
+
+### Cenários práticos
+
+```text
+1.2.0 → 1.2.1
+```
+
+- Correção de namespaces gerados incorretamente
+- Ajuste em arquivos de configuração
+- Atualização de pacotes NuGet
+
+# ⚠️ O que é considerado uma Breaking Change?
+
+Uma mudança é considerada incompatível quando o usuário precisa realizar alguma ação manual para continuar utilizando a ferramenta ou os projetos gerados.
+
+Alguns exemplos:
 
 - Alteração da estrutura de pastas
-- Substituição de biblioteca central (ex: MediatR por outro padrão)
+- Mudança nos contratos públicos
+- Remoção de funcionalidades existentes
+- Mudança significativa na arquitetura gerada
+- Alteração do fluxo de desenvolvimento esperado
 
-### MINOR
+Sempre que uma breaking change ocorrer, a versão **MAJOR** será incrementada.
 
-Incrementado quando houver:
+# 🚀 Estratégia de Releases
 
-- Inclusão de novos templates
-- Adição de novos recursos opcionais
-- Integração com novas tecnologias (ex: Redis, OpenTelemetry, Aspire)
-- Melhorias arquiteturais compatíveis com versões anteriores
+Cada versão publicada segue algumas diretrizes:
+
+- Todas as releases são identificadas através de tags no Git
+- Cada release possui um changelog detalhando as alterações
+- Novos recursos são adicionados apenas à versão principal mais recente
+- Versões anteriores recebem apenas correções críticas, quando necessário
 
 Exemplo:
 
-- Novo template de Worker
-- Inclusão opcional de HealthChecks
+```text
+v1.0.0
+v1.1.0
+v1.2.0
+v2.0.0
+```
 
-### PATCH
+# 🧪 Versões Preview
 
-Incrementado quando houver:
+Durante o desenvolvimento de novas funcionalidades, poderão ser publicadas versões de pré-lançamento.
 
-- Correções de bugs
-- Ajustes de configuração
-- Atualização de dependências sem impacto estrutural
-- Correção de documentação
+Exemplo:
 
-## Breaking Changes
+```text
+1.0.0-preview.1
+1.0.0-preview.2
+1.0.0-rc.1
+1.0.0
+```
 
-Uma mudança é considerada breaking change quando:
+Essas versões permitem validar recursos antes da publicação oficial.
 
-- Exige modificação manual no projeto gerado
-- Altera estrutura de diretórios
-- Muda contratos públicos ou padrões arquiteturais
-- Remove funcionalidades existentes
+# 🏗️ Evolução dos Templates
 
-Sempre que ocorrer uma breaking change, a versão MAJOR será incrementada.
+Os templates do ArchForge são opinativos e evoluem continuamente para refletir as melhores práticas do ecossistema .NET.
 
-## Estratégia de Releases
+Essa evolução pode incluir:
 
-- As versões serão marcadas com tags no Git.
-- Cada release conterá um CHANGELOG descrevendo as alterações.
-- Apenas a versão major mais recente receberá melhorias contínuas.
-- Versões anteriores receberão apenas correções críticas, quando aplicável.
-
-## Evolução dos Templates
-
-Os templates deste repositório são opinativos e podem evoluir ao longo do tempo para refletir:
-
-- Boas práticas modernas de arquitetura
+- Novos padrões arquiteturais
+- Melhorias de organização
 - Atualizações do ecossistema .NET
-- Melhorias em escalabilidade e organização
+- Recursos voltados à observabilidade
+- Aprimoramentos de produtividade
+- Boas práticas de mercado
 
-O objetivo é manter equilíbrio entre estabilidade e evolução arquitetural.
+O objetivo é manter um equilíbrio saudável entre **estabilidade**, **consistência** e **evolução tecnológica**, garantindo que novos projetos já nasçam alinhados às práticas modernas de desenvolvimento.
