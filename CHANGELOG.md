@@ -18,7 +18,7 @@ Este projeto segue os princípios do Versionamento Semântico (SemVer) e a estru
 
 - A definir.
 
-## 🚀 1.0.0 - 2026-06-12
+## 🚀 1.0.0 - 2026-06-17
 
 Primeira versão pública do ArchForge.
 
@@ -34,3 +34,5 @@ Primeira versão pública do ArchForge.
 - Migrations de exemplo.
 - Projetos de testes unitários e integração.
 - Estrutura inicial de documentação (ADRs, Diagramas, Linguagem Ubíqua e Postman Collection).
+- Workflow GitHub Actions para execução automática dos testes unitários em Pull Requests.
+- Geração de cobertura de código utilizando Coverlet.

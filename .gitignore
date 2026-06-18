@@ -71,3 +71,24 @@ output/
 # Test Results
 TestResults/
 **/TestResults/
+
+# Coverage Reports
+
+coverage-report/
+**/coverage-report/
+
+# Coverage Files
+
+coverage.cobertura.xml
+coverage.opencover.xml
+coverage.json
+
+# Coverage Artifacts
+
+coverage/
+**/coverage/
+
+# Test Coverage Generated Files
+
+*.coverage
+*.coveragexml

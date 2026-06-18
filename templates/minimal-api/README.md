@@ -230,6 +230,38 @@ dotnet test tests/MeuProjeto.UnitTests
 dotnet test tests/MeuProjeto.IntegrationTests
 ```
 
+## 📊 Cobertura de Testes
+
+O template já possui suporte à geração de cobertura de testes utilizando Coverlet.
+
+### Gerar cobertura dos testes unitários
+
+```bash
+dotnet test tests/MeuProjeto.UnitTests --collect:"XPlat Code Coverage" --settings .runsettings
+```
+
+### Instalar o ReportGenerator
+
+Caso ainda não possua a ferramenta instalada:
+
+```bash
+dotnet tool install -g dotnet-reportgenerator-globaltool
+```
+
+### Gerar relatório HTML
+
+```bash
+reportgenerator -reports:"**/coverage.cobertura.xml" -targetdir:"coverage-report" -reporttypes:"Html;MarkdownSummary"
+```
+
+### Visualizar relatório
+
+Abra o arquivo:
+
+```text
+coverage-report/index.html
+```
+
 ## 📚 Documentação
 
 A documentação do projeto fica centralizada na pasta:
