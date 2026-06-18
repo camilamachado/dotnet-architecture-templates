@@ -28,6 +28,9 @@
       https://github.com/camilamachado/dotnet-architecture-templates
     </RepositoryUrl>
 
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>logo.png</PackageIcon>
+
     <PublishReadyToRun>true</PublishReadyToRun>
     <NoDefaultExcludes>true</NoDefaultExcludes>
   </PropertyGroup>
@@ -36,6 +39,11 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
     <PackageReference Include="Spectre.Console" Version="0.56.0" />
     <PackageReference Include="Spectre.Console.Cli" Version="0.55.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\assets\logo.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <!-- Remove artefatos que nunca devem fazer parte do template -->
