@@ -1,10 +1,7 @@
-﻿using FluentValidation;
-using MediatR;
-using MeuProjeto.Application;
+﻿using MeuProjeto.Application;
 using MeuProjeto.Domain;
 using MeuProjeto.Domain.Repositories.Orders;
 using MeuProjeto.Infrastructure.Database;
-using MeuProjeto.Infrastructure.Messaging;
 using MeuProjeto.Infrastructure.Repositories.Orders;
 using MeuProjeto.SharedKernel.Behaviors;
 using MeuProjeto.SharedKernel.Settings;
@@ -14,11 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MeuProjeto.IoC;
 
-public static class AppServiceCollectionExtensions
+public static class WorkerServiceCollectionExtensions
 {
-    public static void ConfigureAppDependencies(this IServiceCollection services, IConfiguration configuration)
+    public static void ConfigureWorkerDependencies(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddOptions<JwtSettings>().Bind(configuration.GetSection("JwtSettings"))
+        services.AddOptions<MassTransitSettings>().Bind(configuration.GetSection("MassTransit"))
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
@@ -29,21 +26,14 @@ public static class AppServiceCollectionExtensions
                 typeof(ValidationBehavior<,>).Assembly)
         );
 
-        services.AddValidatorsFromAssemblyContaining<IApplicationAssembly>();
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
         //Banco
         services.AddDbContext<MeuProjetoDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("Default"),
                 npgsql => npgsql.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(10), errorCodesToAdd: null)));
 
-        //MassTransit
-        services.AddMassTransitRabbitMqPublisher(configuration);
-
         // Repositories
         services.AddScoped<IOrderRepository, OrderRepository>();
 
         // Services
-
     }
 }

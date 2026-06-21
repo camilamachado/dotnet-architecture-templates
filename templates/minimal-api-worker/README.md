@@ -119,7 +119,7 @@ dotnet run --project src/MeuProjeto.Api
 Criar migration:
 
 ```bash
-dotnet ef migrations add MinhaMigration -p src/MeuProjeto.Infrastructure -s src/MeuProjeto.Api
+dotnet ef migrations add MinhaMigration -p src/MeuProjeto.Infrastructure -s src/MeuProjeto.Api --output-dir Database/Migrations
 ```
 
 Aplicar migrations:

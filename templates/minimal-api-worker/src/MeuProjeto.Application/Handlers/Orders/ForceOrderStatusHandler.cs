@@ -36,7 +36,7 @@ public sealed partial class ForceOrderStatusHandler(
     }
 
     [LoggerMessage(Level = LogLevel.Warning, Message = "Pedido {OrderId} não encontrado. Executado por: {UserId}")]
-    private static partial void LogOrderNotFound( ILogger logger, Guid orderId, string? userId);
+    private static partial void LogOrderNotFound(ILogger logger, Guid orderId, string? userId);
 
     [LoggerMessage(Level = LogLevel.Critical, Message = "CONTINGÊNCIA: Admin {UserId} forçou manualmente o status do pedido {OrderId} para {NewStatus}")]
     private static partial void LogManualStatusOverride(ILogger logger, Guid orderId, string newStatus, string? userId);

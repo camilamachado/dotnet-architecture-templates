@@ -13,9 +13,22 @@ var postgres = isTesting
         .WithPgAdmin(c => c.WithLifetime(ContainerLifetime.Persistent))
         .AddDatabase("Default", "meuprojeto-db");
 
+var rabbitmq = builder.AddRabbitMQ("rabbitmq")
+    .WithManagementPlugin()
+    .WithLifetime(ContainerLifetime.Persistent);
+
 builder.AddProject<Projects.MeuProjeto_Api>("meuprojeto-api")
         .WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Environment.EnvironmentName)
         .WithReference(postgres)
-        .WaitFor(postgres);
+        .WithReference(rabbitmq)
+        .WaitFor(postgres)
+        .WaitFor(rabbitmq);
+
+builder.AddProject<Projects.MeuProjeto_Worker>("meuprojeto-worker")
+        .WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Environment.EnvironmentName)
+        .WithReference(postgres)
+        .WithReference(rabbitmq)
+        .WaitFor(postgres)
+        .WaitFor(rabbitmq);
 
 builder.Build().Run();

@@ -1,4 +1,5 @@
-﻿using MeuProjeto.Application.Commands.Orders;
+﻿using FgcGames.EventContracts.Events;
+using MeuProjeto.Application.Commands.Orders;
 using MeuProjeto.Application.Responses.Orders;
 using MeuProjeto.Domain.Entities;
 using Riok.Mapperly.Abstractions;
@@ -37,4 +38,13 @@ public static partial class OrderMapper
     public static partial GetOrdersResponse ToGetOrdersResponse(this Order order);
 
     public static partial IEnumerable<GetOrdersResponse> ToGetOrdersResponseList(this IEnumerable<Order> orders);
+
+    public static OrderPlacedEvent ToOrderPlacedEvent(this Order order)
+    => new(
+        OrderId: order.Id,
+        UserId: Guid.Empty,
+        GameId: Guid.Empty,
+        Price: order.TotalAmount,
+        CreatedAtUtc: order.CreatedAt
+    );
 }

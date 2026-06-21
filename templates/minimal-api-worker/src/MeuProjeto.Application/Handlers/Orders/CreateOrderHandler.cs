@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using MeuProjeto.Application.Commands.Orders;
 using MeuProjeto.Application.Mappers;
 using MeuProjeto.Application.Responses.Orders;
@@ -10,6 +11,7 @@ namespace MeuProjeto.Application.Handlers.Orders;
 
 public sealed partial class CreateOrderHandler(
     IOrderRepository orderRepository,
+    IPublishEndpoint publishEndpoint,
     ILogger<CreateOrderHandler> logger)
 : IRequestHandler<CreateOrderCommand, Result<CreateOrderResponse>>
 {
@@ -22,6 +24,9 @@ public sealed partial class CreateOrderHandler(
         orderRepository.Add(order);
 
         await orderRepository.SaveChangesAsync();
+
+        var orderPlacedEvent = order.ToOrderPlacedEvent();
+        await publishEndpoint.Publish(orderPlacedEvent, cancellationToken);
 
         LogOrderCreated(logger, order.Id, order.Customer);
 
