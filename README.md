@@ -32,22 +32,44 @@ dotnet tool update --global ArchForge.Cli
 
 # ⚡ Comandos Disponíveis
 
-### Exibir ajuda
+### 📌 Exibir ajuda
 
 ```bash
 arch-forge --help
 ```
 
-### Exibir versão
+### 📌 Exibir versão
 
 ```bash
 arch-forge version
 ```
 
-### Criar novo projeto
+### 📌 Listar templates disponíveis
+
+Lista todos os templates disponíveis para geração de projetos.
 
 ```bash
-arch-forge new MeuServico
+arch-forge templates
+```
+
+### 📌 Criar novo projeto
+
+Gera um novo projeto a partir de um template existente.
+
+#### 📌 Sintaxe correta:
+
+```bash
+arch-forge new <template> <name>
+```
+
+#### 📌 Exemplos:
+
+```bash
+arch-forge new minimal-api MeuServico
+```
+
+```bash
+arch-forge new minimal-api-worker MeuServico
 ```
 
 # 🛠️ Desenvolvimento Local
