@@ -10,7 +10,7 @@ namespace ArchForge.Commands;
 /// Command responsável por gerar um novo projeto a partir de um template.
 /// Orquestra a execução do <see cref="ITemplateEngine"/> e fornece feedback no terminal.
 /// </summary>
-public class NewCommand(ITemplateEngine engine) : Command<NewCommand.Settings>
+public class NewCommand(ITemplateEngine engine) : AsyncCommand<NewCommand.Settings>
 {
 	private readonly ITemplateEngine _engine = engine;
 
@@ -23,7 +23,7 @@ public class NewCommand(ITemplateEngine engine) : Command<NewCommand.Settings>
 		public string Name { get; set; } = string.Empty;
 	}
 
-	protected override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
+	protected override async Task<int> ExecuteAsync(CommandContext context, Settings settings, CancellationToken cancellationToken)
 	{
 		if (string.IsNullOrWhiteSpace(settings.Template))
 		{
@@ -48,14 +48,16 @@ public class NewCommand(ITemplateEngine engine) : Command<NewCommand.Settings>
 
 		try
 		{
-			AnsiConsole.Status()
-				.Start("Gerando projeto...", ctx =>
+			await AnsiConsole.Status()
+				.StartAsync("Gerando projeto...", async _ =>
 				{
-					_engine.GenerateAsync(new TemplateContext
-					{
-						Name = settings.Name,
-						TemplateName = settings.Template
-					}, cancellationToken);
+					await _engine.GenerateAsync(
+						new TemplateContext
+						{
+							Name = settings.Name,
+							TemplateName = settings.Template
+						},
+						CancellationToken.None);
 				});
 
 			AnsiConsole.MarkupLine("[green]Projeto criado com sucesso![/]");
