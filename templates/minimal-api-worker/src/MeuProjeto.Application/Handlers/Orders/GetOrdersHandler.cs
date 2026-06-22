@@ -18,7 +18,7 @@ public sealed class GetOrdersHandler(
             ? null
             : request.UserId;
 
-        var (items, totalCount) = await orderRepository.GetPagedAsync(
+        var (items, totalCount) = await orderRepository.GetPagedAsNoTrackingAsync(
             request.Page,
             request.PageSize,
             customerId,

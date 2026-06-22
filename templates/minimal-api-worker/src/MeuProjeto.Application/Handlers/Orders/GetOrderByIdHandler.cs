@@ -16,7 +16,7 @@ public sealed partial class GetOrderByIdHandler(
 {
     public async Task<Result<GetOrderByIdResponse>> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
     {
-        var order = await orderRepository.GetByIdAsync(request.Id, cancellationToken);
+        var order = await orderRepository.GetByIdAsNoTrackingAsync(request.Id, cancellationToken);
 
         if (order is null)
         {

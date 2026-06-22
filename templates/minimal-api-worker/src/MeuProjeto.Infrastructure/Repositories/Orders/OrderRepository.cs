@@ -9,14 +9,20 @@ public sealed class OrderRepository(MeuProjetoDbContext context): IOrderReposito
 {
     public void Add(Order order)
         => context.Orders.Add(order);
-    public Task<Order?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<Order?> GetByIdAsNoTrackingAsync(Guid id, CancellationToken cancellationToken = default)
         => context.Orders
             .AsNoTracking()
             .FirstOrDefaultAsync(
                 order => order.Id == id,
                 cancellationToken);
 
-    public async Task<(IReadOnlyCollection<Order> Items, int TotalCount)> GetPagedAsync(
+    public Task<Order?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        => context.Orders
+            .FirstOrDefaultAsync(
+                order => order.Id == id,
+                cancellationToken);
+
+    public async Task<(IReadOnlyCollection<Order> Items, int TotalCount)> GetPagedAsNoTrackingAsync(
         int page,
         int pageSize,
         string? customerId = null,

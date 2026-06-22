@@ -21,6 +21,16 @@ public interface IOrderRepository
     Task<Order?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Recupera um pedido específico através do seu identificador único.
+    /// </summary>
+    /// <param name="id">O identificador único do pedido.</param>
+    /// <param name="cancellationToken">Token utilizado para cancelar a consulta.</param>
+    /// <returns>
+    /// A instância do pedido se encontrado; caso contrário, nulo.
+    /// </returns>
+    Task<Order?> GetByIdAsNoTrackingAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Obtém uma lista paginada de pedidos com base nos filtros informados.
     /// </summary>
     /// <param name="page">O número da página atual (índice baseado em 1).</param>
@@ -30,7 +40,7 @@ public interface IOrderRepository
     /// <returns>
     /// Uma tupla contendo: coleção de pedidos da página solicitada e quantidade total de registros encontrados antes da paginação.
     /// </returns>
-    Task<(IReadOnlyCollection<Order> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, string? customerId = null, CancellationToken cancellationToken = default);
+    Task<(IReadOnlyCollection<Order> Items, int TotalCount)> GetPagedAsNoTrackingAsync(int page, int pageSize, string? customerId = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Persiste no banco de dados todas as alterações pendentes no contexto atual.

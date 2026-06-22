@@ -29,4 +29,10 @@
     <ProjectReference Include="..\MeuProjeto.ServiceDefaults\MeuProjeto.ServiceDefaults.csproj" />
     <ProjectReference Include="..\MeuProjeto.SharedKernel\MeuProjeto.SharedKernel.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.Testing.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

@@ -13,9 +13,13 @@ var postgres = isTesting
         .WithPgAdmin(c => c.WithLifetime(ContainerLifetime.Persistent))
         .AddDatabase("Default", "meuprojeto-db");
 
-var rabbitmq = builder.AddRabbitMQ("rabbitmq")
-    .WithManagementPlugin()
-    .WithLifetime(ContainerLifetime.Persistent);
+var rabbitmq = isTesting
+    ? builder.AddRabbitMQ("rabbitmq")
+        .WithManagementPlugin()
+        .WithLifetime(ContainerLifetime.Session)
+    : builder.AddRabbitMQ("rabbitmq")
+        .WithManagementPlugin()
+        .WithLifetime(ContainerLifetime.Persistent);
 
 builder.AddProject<Projects.MeuProjeto_Api>("meuprojeto-api")
         .WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Environment.EnvironmentName)

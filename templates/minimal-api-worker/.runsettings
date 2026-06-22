@@ -14,6 +14,7 @@
             [MeuProjeto.Application]MeuProjeto.Application.Responses.*,
             [MeuProjeto.Application]MeuProjeto.Application.Commands.*,
             [MeuProjeto.Application]MeuProjeto.Application.Queries.*,
+            [MeuProjeto.Infrastructure]MeuProjeto.Infrastructure.Messaging.*,
             [MeuProjeto.SharedKernel]MeuProjeto.SharedKernel.Exceptions.*,
             [MeuProjeto.SharedKernel]MeuProjeto.SharedKernel.Settings.*,
             [MeuProjeto.SharedKernel]MeuProjeto.SharedKernel.Requests.*,
