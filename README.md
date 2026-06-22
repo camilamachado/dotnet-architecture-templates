@@ -32,22 +32,44 @@ dotnet tool update --global ArchForge.Cli
 
 # ⚡ Comandos Disponíveis
 
-### Exibir ajuda
+### 📌 Exibir ajuda
 
 ```bash
 arch-forge --help
 ```
 
-### Exibir versão
+### 📌 Exibir versão
 
 ```bash
 arch-forge version
 ```
 
-### Criar novo projeto
+### 📌 Listar templates disponíveis
+
+Lista todos os templates disponíveis para geração de projetos.
 
 ```bash
-arch-forge new MeuServico
+arch-forge templates
+```
+
+### 📌 Criar novo projeto
+
+Gera um novo projeto a partir de um template existente.
+
+#### 📌 Sintaxe correta:
+
+```bash
+arch-forge new <template> <name>
+```
+
+#### 📌 Exemplos:
+
+```bash
+arch-forge new minimal-api MeuServico
+```
+
+```bash
+arch-forge new minimal-api-worker MeuServico
 ```
 
 # 🛠️ Desenvolvimento Local
@@ -75,7 +97,7 @@ src/ArchForge.Cli/bin/Release
 ### 3. Instalar localmente
 
 ```bash
-dotnet tool install --global ArchForge.Cli --version 0.1.0-preview.1 --add-source ./src/ArchForge.Cli/bin/Release
+dotnet tool install --global ArchForge.Cli --version 1.0.0 --add-source ./src/ArchForge.Cli/bin/Release
 ```
 
 ### 4. Validar instalação
@@ -97,7 +119,7 @@ dotnet pack src/ArchForge.Cli -c Release
 ### Atualizar instalação local
 
 ```bash
-dotnet tool update --global ArchForge.Cli --version 0.1.0-preview.2 --add-source ./src/ArchForge.Cli/bin/Release
+dotnet tool update --global ArchForge.Cli --version 1.0.0 --add-source ./src/ArchForge.Cli/bin/Release
 ```
 
 > Atualize sempre o campo `<Version>` no arquivo `.csproj`.

@@ -18,7 +18,20 @@ Este projeto segue os princípios do Versionamento Semântico (SemVer) e a estru
 
 - A definir.
 
-## 🚀 1.0.0 - 2026-06-17
+## 🚀 1.0.0 - 2026-06-21
+
+### ✨ Adicionado
+
+- Suporte a múltiplos templates: Implementação de catálogo interno e comando de listagem de templates na CLI.
+- Novo template `minimal-api-worker` Estrutura baseada em Clean Architecture combinando uma Minimal API e um Worker Service para processamento em background.
+- Integração com Mensageria: Configuração do Worker Service com exemplo prático de publicação/envio de eventos utilizando MassTransit.
+- Preparação para o NuGet: Configuração final de metadados, logo oficial e ajustes no README para publicação do pacote da CLI como .NET Global Tool pública.
+
+### 🔄 Alterado
+
+- Otimização de Queries: Ajustes finos no uso de `AsNoTracking` nas consultas do Entity Framework Core para melhor performance.
+
+## 🚀 0.1.0 - 2026-06-17
 
 Primeira versão pública do ArchForge.
 

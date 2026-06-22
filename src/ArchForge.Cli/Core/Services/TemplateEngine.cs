@@ -220,7 +220,10 @@ public sealed class TemplateEngine(IFileSystemService fileSystem) : ITemplateEng
 
 			["MeuProjeto.Api"] = $"{serviceName}.Api",
 			["meuprojeto-api"] = $"{serviceNameLower}-api",
-			["meuprojeto-db"] = $"{serviceNameLower}-db"
+			["meuprojeto-db"] = $"{serviceNameLower}-db",
+
+			["MeuProjeto.Worker"] = $"{serviceName}.Worker",
+			["meuprojeto-worker"] = $"{serviceNameLower}-worker",
 		};
 	}
 

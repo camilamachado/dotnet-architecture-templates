@@ -19,7 +19,9 @@ app.Configure(config =>
 {
 	config.SetApplicationName("arch-forge");
 
-	config.AddCommand<NewCommand>("new").WithDescription("Cria um novo projeto a partir de um template.");
+	config.AddCommand<NewCommand>("new").WithDescription("Cria um novo projeto a partir de um template. Utilize 'arch-forge templates' para visualizar as opções disponíveis.");
+
+	config.AddCommand<TemplatesCommand>("templates").WithDescription("Lista todos os templates disponíveis."); ;
 
 	config.AddCommand<VersionCommand>("version").WithDescription("Exibe a versão instalada do ArchForge.");
 });
