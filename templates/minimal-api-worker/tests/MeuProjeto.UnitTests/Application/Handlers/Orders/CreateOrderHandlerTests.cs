@@ -1,4 +1,6 @@
-﻿using MeuProjeto.Application.Commands.Orders;
+﻿using FgcGames.EventContracts.Events;
+using MassTransit;
+using MeuProjeto.Application.Commands.Orders;
 using MeuProjeto.Application.Handlers.Orders;
 using MeuProjeto.Domain.Entities;
 using MeuProjeto.Domain.Repositories.Orders;
@@ -11,15 +13,17 @@ namespace MeuProjeto.UnitTests.Application.Handlers.Orders;
 public class CreateOrderHandlerTests
 {
     private readonly IOrderRepository _orderRepository;
+    private readonly IPublishEndpoint _publishEndpoint;
     private readonly ILogger<CreateOrderHandler> _logger;
     private readonly CreateOrderHandler _sut;
 
     public CreateOrderHandlerTests()
     {
         _orderRepository = Substitute.For<IOrderRepository>();
+        _publishEndpoint = Substitute.For<IPublishEndpoint>();
         _logger = Substitute.For<ILogger<CreateOrderHandler>>();
 
-        _sut = new CreateOrderHandler(_orderRepository, _logger);
+        _sut = new CreateOrderHandler(_orderRepository, _publishEndpoint, _logger);
     }
 
     [Fact]
@@ -30,6 +34,10 @@ public class CreateOrderHandlerTests
 
         _orderRepository.SaveChangesAsync()
             .Returns(1);
+
+        _publishEndpoint
+            .Publish(Arg.Any<OrderPlacedEvent>(), Arg.Any<CancellationToken>())
+            .Returns(Task.CompletedTask);
 
         // Act
         var result = await _sut.Handle(command, CancellationToken.None);
@@ -49,6 +57,13 @@ public class CreateOrderHandlerTests
                 o.DeliveryAddress.Cep == "88550000"));
 
         await _orderRepository.Received(1).SaveChangesAsync();
+
+        await _publishEndpoint.Received(1)
+                .Publish(
+                    Arg.Is<OrderPlacedEvent>(e =>
+                        e.Price == command.TotalAmount &&
+                        e.OrderId != Guid.Empty),
+                    Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -78,6 +93,35 @@ public class CreateOrderHandlerTests
                 o.DeliveryAddress.Cep == "88550000"));
 
         await _orderRepository.Received(1).SaveChangesAsync();
+
+        await _publishEndpoint.DidNotReceive().Publish(Arg.Any<OrderPlacedEvent>(), Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public async Task Dado_FalhaNoPublish_Quando_CriarPedido_Entao_PropagaExcecao()
+    {
+        // Arrange
+        var command = CreateCommand();
+
+        _orderRepository.SaveChangesAsync()
+            .Returns(1);
+
+        _publishEndpoint
+            .Publish(Arg.Any<OrderPlacedEvent>(), Arg.Any<CancellationToken>())
+            .Returns<Task>(_ => throw new Exception("Erro no broker"));
+
+        // Act
+        var exception = await Should.ThrowAsync<Exception>(() =>
+            _sut.Handle(command, CancellationToken.None));
+
+        // Assert
+        exception.Message.ShouldBe("Erro no broker");
+
+        _orderRepository.Received(1).Add(Arg.Any<Order>());
+
+        await _orderRepository.Received(1).SaveChangesAsync();
+
+        await _publishEndpoint.Received(1).Publish(Arg.Any<OrderPlacedEvent>(), Arg.Any<CancellationToken>());
     }
 
 

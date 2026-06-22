@@ -32,7 +32,7 @@ public class GetOrderByIdHandlerTests
         var query = CreateQuery(order.Id, userId: "user-1", isAdmin: false);
 
         _orderRepository
-            .GetByIdAsync(query.Id, Arg.Any<CancellationToken>())
+            .GetByIdAsNoTrackingAsync(query.Id, Arg.Any<CancellationToken>())
             .Returns(order);
 
         // Act
@@ -45,7 +45,7 @@ public class GetOrderByIdHandlerTests
         result.Value.Id.ShouldBe(order.Id);
         result.Value.Customer.ShouldBe(order.Customer);
 
-        await _orderRepository.Received(1).GetByIdAsync(query.Id, Arg.Any<CancellationToken>());
+        await _orderRepository.Received(1).GetByIdAsNoTrackingAsync(query.Id, Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class GetOrderByIdHandlerTests
         var query = CreateQuery(Guid.NewGuid());
 
         _orderRepository
-            .GetByIdAsync(query.Id, Arg.Any<CancellationToken>())
+            .GetByIdAsNoTrackingAsync(query.Id, Arg.Any<CancellationToken>())
             .Returns((Order?)null);
 
         // Act
@@ -65,7 +65,7 @@ public class GetOrderByIdHandlerTests
         result.IsSuccess.ShouldBeFalse();
         result.Exception.ShouldBeOfType<NotFoundException>();
 
-        await _orderRepository.Received(1).GetByIdAsync(query.Id, Arg.Any<CancellationToken>());
+        await _orderRepository.Received(1).GetByIdAsNoTrackingAsync(query.Id, Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -77,7 +77,7 @@ public class GetOrderByIdHandlerTests
         var query = CreateQuery(order.Id, userId: "user-1", isAdmin: false);
 
         _orderRepository
-            .GetByIdAsync(query.Id, Arg.Any<CancellationToken>())
+            .GetByIdAsNoTrackingAsync(query.Id, Arg.Any<CancellationToken>())
             .Returns(order);
 
         // Act
@@ -87,7 +87,7 @@ public class GetOrderByIdHandlerTests
         result.IsSuccess.ShouldBeFalse();
         result.Exception.ShouldBeOfType<NotFoundException>();
 
-        await _orderRepository.Received(1).GetByIdAsync(query.Id, Arg.Any<CancellationToken>());
+        await _orderRepository.Received(1).GetByIdAsNoTrackingAsync(query.Id, Arg.Any<CancellationToken>());
         await _orderRepository.DidNotReceive().SaveChangesAsync();
     }
 
@@ -100,7 +100,7 @@ public class GetOrderByIdHandlerTests
         var query = CreateQuery(order.Id, userId: "admin-1", isAdmin: true);
 
         _orderRepository
-            .GetByIdAsync(query.Id, Arg.Any<CancellationToken>())
+            .GetByIdAsNoTrackingAsync(query.Id, Arg.Any<CancellationToken>())
             .Returns(order);
 
         // Act
@@ -112,7 +112,7 @@ public class GetOrderByIdHandlerTests
         result.Value.ShouldNotBeNull();
         result.Value.Id.ShouldBe(order.Id);
 
-        await _orderRepository.Received(1).GetByIdAsync(query.Id, Arg.Any<CancellationToken>());
+        await _orderRepository.Received(1).GetByIdAsNoTrackingAsync(query.Id, Arg.Any<CancellationToken>());
     }
 
     private static GetOrderByIdQuery CreateQuery(

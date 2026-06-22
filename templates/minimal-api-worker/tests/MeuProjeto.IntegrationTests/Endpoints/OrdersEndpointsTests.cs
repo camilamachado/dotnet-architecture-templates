@@ -226,6 +226,7 @@ public class OrdersIntegrationTests(IntegrationTestFixture fixture) : IAsyncLife
         {
             db.Orders.Add(CreateOrder(TestAuthHelper.CustomerEmail));
             db.Orders.Add(CreateOrder(TestAuthHelper.CustomerEmail));
+            return await db.SaveChangesAsync();
         });
 
         var client = await TestAuthHelper.CreateUserCustomerAsync(_fixture);
@@ -255,6 +256,7 @@ public class OrdersIntegrationTests(IntegrationTestFixture fixture) : IAsyncLife
         await _fixture.ExecuteDbContextAsync(async db =>
         {
             db.Orders.Add(order);
+            return await db.SaveChangesAsync();
         });
 
         var client = await TestAuthHelper.CreateUserCustomerAsync(_fixture);
@@ -305,6 +307,7 @@ public class OrdersIntegrationTests(IntegrationTestFixture fixture) : IAsyncLife
         await _fixture.ExecuteDbContextAsync(async db =>
         {
             db.Orders.Add(order);
+            return await db.SaveChangesAsync();
         });
 
         var client = await TestAuthHelper.CreateUserCustomerAsync(_fixture);
@@ -334,6 +337,7 @@ public class OrdersIntegrationTests(IntegrationTestFixture fixture) : IAsyncLife
         await _fixture.ExecuteDbContextAsync(async db =>
         {
             db.Orders.Add(order);
+            return await db.SaveChangesAsync();
         });
 
         var client = await TestAuthHelper.CreateUserCustomerAsync(_fixture);
@@ -355,8 +359,7 @@ public class OrdersIntegrationTests(IntegrationTestFixture fixture) : IAsyncLife
         // Assert
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
 
-        var result = await response.ReadContentAsync<UpdateDeliveryAddressResponse>(
-            TestContext.Current.CancellationToken);
+        var result = await response.ReadContentAsync<UpdateDeliveryAddressResponse>(TestContext.Current.CancellationToken);
 
         result.ShouldNotBeNull();
         result.Id.ShouldBe(order.Id);
@@ -404,6 +407,7 @@ public class OrdersIntegrationTests(IntegrationTestFixture fixture) : IAsyncLife
         await _fixture.ExecuteDbContextAsync(async db =>
         {
             db.Orders.Add(order);
+            return await db.SaveChangesAsync();
         });
 
         var client = await TestAuthHelper.CreateUserCustomerAsync(_fixture);
@@ -471,6 +475,7 @@ public class OrdersIntegrationTests(IntegrationTestFixture fixture) : IAsyncLife
         await _fixture.ExecuteDbContextAsync(async db =>
         {
             db.Orders.Add(order);
+            return await db.SaveChangesAsync();
         });
 
         var client = await TestAuthHelper.CreateUserCustomerAsync(_fixture);
@@ -508,6 +513,7 @@ public class OrdersIntegrationTests(IntegrationTestFixture fixture) : IAsyncLife
         await _fixture.ExecuteDbContextAsync(async db =>
         {
             db.Orders.Add(order);
+            return await db.SaveChangesAsync();
         });
 
         var client = await TestAuthHelper.CreateAdminClientAsync(_fixture);

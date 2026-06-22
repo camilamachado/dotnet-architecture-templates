@@ -32,7 +32,7 @@ public class GetOrdersHandlerTests
         };
 
         _orderRepository
-            .GetPagedAsync(query.Page, query.PageSize, "user-1", Arg.Any<CancellationToken>())
+            .GetPagedAsNoTrackingAsync(query.Page, query.PageSize, "user-1", Arg.Any<CancellationToken>())
             .Returns((orders, orders.Count));
 
         // Act
@@ -47,7 +47,7 @@ public class GetOrdersHandlerTests
         result.Value.CurrentPage.ShouldBe(query.Page);
         result.Value.PageSize.ShouldBe(query.PageSize);
 
-        await _orderRepository.Received(1).GetPagedAsync(query.Page, query.PageSize, "user-1", Arg.Any<CancellationToken>());
+        await _orderRepository.Received(1).GetPagedAsNoTrackingAsync(query.Page, query.PageSize, "user-1", Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public class GetOrdersHandlerTests
         };
 
         _orderRepository
-            .GetPagedAsync(query.Page, query.PageSize, null, Arg.Any<CancellationToken>())
+            .GetPagedAsNoTrackingAsync(query.Page, query.PageSize, null, Arg.Any<CancellationToken>())
             .Returns((orders, orders.Count));
 
         // Act
@@ -75,7 +75,7 @@ public class GetOrdersHandlerTests
         result.Value.ShouldNotBeNull();
         result.Value.Items.Count().ShouldBe(2);
 
-        await _orderRepository.Received(1).GetPagedAsync(query.Page, query.PageSize, null, Arg.Any<CancellationToken>());
+        await _orderRepository.Received(1).GetPagedAsNoTrackingAsync(query.Page, query.PageSize, null, Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -90,7 +90,7 @@ public class GetOrdersHandlerTests
         };
 
         _orderRepository
-            .GetPagedAsync(query.Page, query.PageSize, "user-1", Arg.Any<CancellationToken>())
+            .GetPagedAsNoTrackingAsync(query.Page, query.PageSize, "user-1", Arg.Any<CancellationToken>())
             .Returns((orders, 12));
 
         // Act

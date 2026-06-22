@@ -78,16 +78,15 @@ public class IntegrationTestFixture : IAsyncLifetime
         => App.CreateHttpClient("meuprojeto-api", endpointName: "https");
 
     /// <summary>
-    /// Executa uma ação com um <see cref="MeuProjetoDbContext"/> apontando para o banco de testes
+    /// Executa uma função isolada utilizando um <see cref="MeuProjetoDbContext"/> apontando para o banco de testes.
     /// </summary>
-    public async Task ExecuteDbContextAsync(Func<MeuProjetoDbContext, Task> action)
+    public async Task<T> ExecuteDbContextAsync<T>(Func<MeuProjetoDbContext, Task<T>> action)
     {
         var options = new DbContextOptionsBuilder<MeuProjetoDbContext>()
             .UseNpgsql(_connectionString)
             .Options;
 
         await using var context = new MeuProjetoDbContext(options);
-        await action(context);
-        await context.SaveChangesAsync();
+        return await action(context);
     }
 }

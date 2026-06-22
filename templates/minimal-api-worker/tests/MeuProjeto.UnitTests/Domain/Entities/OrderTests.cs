@@ -61,6 +61,34 @@ public class OrderTests
     }
 
     [Fact]
+    public void Dado_MesmoEndereco_Quando_AtualizarEndereco_Entao_NaoDeveAlterarNada()
+    {
+        // Arrange
+        var order = CreateValidOrder();
+        var enderecoOriginal = order.DeliveryAddress;
+
+        // Act
+        order.UpdateDeliveryAddress("Street", "City", "SP", "88550000");
+
+        // Assert
+        order.DeliveryAddress.ShouldBe(enderecoOriginal);
+    }
+
+    [Fact]
+    public void Dado_PedidoComStatusDiferenteDePendingPayment_Quando_AtualizarEndereco_Entao_LancaOrderLockedException()
+    {
+        // Arrange
+        var order = CreateValidOrder();
+        order.Approve();
+
+        // Act
+        Action act = () => order.UpdateDeliveryAddress("New Street", "New City", "RJ", "12345678");
+
+        // Assert
+        Should.Throw<OrderLockedException>(act);
+    }
+
+    [Fact]
     public void Dado_PedidoValido_Quando_AtualizarEndereco_Entao_AtualizaEndereco()
     {
         // Arrange
@@ -101,6 +129,33 @@ public class OrderTests
     }
 
     [Fact]
+    public void Dado_PedidoEmAberto_Quando_Cancelar_Entao_StatusMudaParaRejected()
+    {
+        // Arrange
+        var order = CreateValidOrder();
+
+        // Act
+        order.Cancel();
+
+        // Assert
+        order.Status.ShouldBe(OrderStatus.Rejected);
+    }
+
+    [Fact]
+    public void Dado_PedidoJaAprovado_Quando_AprovarNovamente_Entao_LancaInvalidOrderException()
+    {
+        // Arrange
+        var order = CreateValidOrder();
+        order.Approve();
+
+        // Act
+        Action act = () => order.Approve();
+
+        // Assert
+        Should.Throw<InvalidOrderException>(act);
+    }
+
+    [Fact]
     public void Dado_PedidoRejeitado_Quando_Cancelar_Entao_LancaExcecao()
     {
         // Arrange
@@ -110,6 +165,20 @@ public class OrderTests
         Action act = () => order.Cancel();
 
         // Act & Assert
+        Should.Throw<InvalidOrderException>(act);
+    }
+
+    [Fact]
+    public void Dado_PedidoJaRejeitado_Quando_RejeitarNovamente_Entao_LancaInvalidOrderException()
+    {
+        // Arrange
+        var order = CreateValidOrder();
+        order.Reject();
+
+        // Act
+        Action act = () => order.Reject();
+
+        // Assert
         Should.Throw<InvalidOrderException>(act);
     }
 
