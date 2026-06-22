@@ -97,7 +97,7 @@ src/ArchForge.Cli/bin/Release
 ### 3. Instalar localmente
 
 ```bash
-dotnet tool install --global ArchForge.Cli --version 0.1.0-preview.1 --add-source ./src/ArchForge.Cli/bin/Release
+dotnet tool install --global ArchForge.Cli --version 1.0.0 --add-source ./src/ArchForge.Cli/bin/Release
 ```
 
 ### 4. Validar instalação
@@ -119,7 +119,7 @@ dotnet pack src/ArchForge.Cli -c Release
 ### Atualizar instalação local
 
 ```bash
-dotnet tool update --global ArchForge.Cli --version 0.1.0-preview.2 --add-source ./src/ArchForge.Cli/bin/Release
+dotnet tool update --global ArchForge.Cli --version 1.0.0 --add-source ./src/ArchForge.Cli/bin/Release
 ```
 
 > Atualize sempre o campo `<Version>` no arquivo `.csproj`.
